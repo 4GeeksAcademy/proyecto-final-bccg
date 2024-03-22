@@ -42,7 +42,7 @@ export const BookDetails = () => {
 
     // Render loading state until bookDetails and author are fetched
     if (!bookDetails || !author) {
-        return <div>Cargando...</div>;
+        return <div>Loading...</div>;
     } else {
         return (
             <Container>
