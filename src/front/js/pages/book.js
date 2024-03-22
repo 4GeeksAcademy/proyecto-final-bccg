@@ -52,9 +52,9 @@ export const BookDetails = () => {
                     </div>
                     <div>
                         <h2>{bookDetails.title}</h2>
-                        <p>Autor: {author.name}</p>
-                        <p>Año de publicación: {bookDetails.first_publish_date}</p>
-                        <p>Descripción: {typeof bookDetails.description === 'string' ? bookDetails.description : bookDetails.description?.value}</p>
+                        <p>Author: {author.name}</p>
+                        <p>Year of Publication: {bookDetails.first_publish_date}</p>
+                        <p>Description: {typeof bookDetails.description === 'string' ? bookDetails.description : bookDetails.description?.value}</p>
                         <p>ISBN: {bookDetails.isbn}</p>
                         <Link to={`/books/works/${id}/reviews`}>
                             <button className="btn btn-success">LEAVE A REVIEW</button>
