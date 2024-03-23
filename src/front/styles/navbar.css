@@ -60,3 +60,8 @@
   box-shadow: 0 0 4px rgba(0,0,0,0.2);
   background-color: white; 
 }
+
+#dropdown-profile::after {
+border: 0px;
+margin-left: unset;
+}
