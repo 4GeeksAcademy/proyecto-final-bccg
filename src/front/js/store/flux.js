@@ -16,22 +16,45 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             ],
             resultados: [],
+            favorites: [],
             urlBase: "https://openlibrary.org/search.json",
+            favorites: [],
+            // Otros métodos de tu store...
+            addToFavorites: (book) => {
+                const { favorites } = getStore();
+                if (!favorites.find((b) => b.key === book.key)) {
+                    const updatedFavorites = [...favorites, book];
+                    setStore({ favorites: updatedFavorites });
+                    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+                }
+            },
+            removeFromFavorites: (bookKey) => {
+                const { favorites } = getStore();
+                const updatedFavorites = favorites.filter((book) => book.key !== bookKey);
+                setStore({ favorites: updatedFavorites });
+                localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+            },
         },
         actions: {
-            login: async (email, password) => {
-                // Usuario y contraseña falsos para pruebas como usuario
-                const fakeEmail = "prueba1@gmail.com";
-                const fakePassword = "prueba123";
-                const fakeToken = "fakeToken123456789"; // Token falso para simulación no borrar
-            
-                // Simulación de autenticación para el usuario falso no borrar
-                if (email === fakeEmail && password === fakePassword) {
-                    // Estableciendo el token falso y procediendo como si fuera exitoso no borrar
-                    setStore({ token: fakeToken });
-                    localStorage.setItem("accessToken", fakeToken);
-                    return { success: true };
+            addToFavorites: async (bookId) => {
+                const actions = getActions();
+                try {
+                    const response = await actions.APIfetch("/add_to_favorites", "POST", {
+                        if (body) {
+                            params.headers["Content-Type"] = "application/json";
+                            params.body = JSON.stringify(body);
+                        }
+                    });
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(data.message || "Error al agregar libro a favoritos");
+                    }
+                    console.log(data.message);
+                } catch (error) {
+                    console.error("Error al agregar libro a favoritos:", error);
                 }
+            },
+            login: async (email, password) => {
             
                 // Proceso real de autenticación no borrar
                 const actions = getActions();
@@ -102,7 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     params.body = JSON.stringify(body);
                 }
                 try {
-                    const res = await fetch(`${backendURL}/api${endpoint}`, params);
+                    const res = await fetch(`${backendURL}api${endpoint}`, params);
                     if (!res.ok) throw new Error(res.statusText);
                     return await res.json();
                 } catch (error) {
@@ -110,16 +133,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                     throw error;
                 }
             },
-            setBooks: async (searchTerm) => {
-                const store = getStore();
+            fetchBooksByCategory: async (category) => {
                 try {
-                    const response = await fetch(`${store.urlBase}?q=${searchTerm}&limit=50`);
-                    if (!response.ok) throw new Error('Respuesta no exitosa de la API');
+                    const response = await fetch(`https://openlibrary.org/subjects/${category}.json?limit=12`);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
                     const data = await response.json();
-                    const filteredResults = data.docs.filter(doc => doc.title.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 6);
-                    setStore({ resultados: filteredResults });
+                    return data.works;
                 } catch (error) {
-                    console.error("Error al realizar la búsqueda:", error);
+                    console.error('Error fetching books:', error);
+                    return [];
                 }
             },
             loadSession: () => {

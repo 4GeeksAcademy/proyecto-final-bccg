@@ -1,47 +1,79 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../styles/privacy-policy.css';
+import '../../styles/privacy-notice.css';
 
-const PrivacyPolicy = () => {
+const PrivacyNotice = () => {
   return (
-    <div className="container mt-5 privacy-policy">
-     <h1 className="privacy-title">Privacy Policy for Recommend Me a Book</h1>
-      <p className="last-updated">Last Updated: 19 MARCH 2024</p>
+    <div className="advertisements-container">
+      <h1 className="advertisements-title">Recommend Me a Book Privacy Notice</h1>
       
-      <p className='introduction'>Welcome to Recommend Me a Book, accessible via www.rmb.com. Our website is dedicated to providing entertainment services, including book recommendations, allowing users to leave reviews and share them with others. This Privacy Policy outlines how we collect, use, process, and share your personal information.</p>
+      <p className="advertisements-intro">Contact: For inquiries, comments, or requests related to privacy, please contact us via support@rmb.com or call +52558745xxxx.</p>
       
-      <h2 className='section-title'>1. Information We Collect</h2>
-      <p className='section-content'>We collect personal information that you voluntarily provide to us, including your name, email address, phone number, date of birth, and the country from which you are accessing our website. This information is collected through forms and cookies to enhance your experience on our site.</p>
+      <section className="for-readers">
+        <h2>1. Information Collected:</h2>
+        <p>We collect personal data such as your name, email, phone number, date of birth, and country of origin. Additionally, through cookies, we gather information about your browsing habits and preferences on our website.</p>
+      </section>
       
-      <h2 className='section-title'>2. How We Use Your Information</h2>
-      <p className='section-content'>Your personal information is used for data analysis, book recommendations, and marketing purposes. These activities help us to tailor our services to your interests and improve the overall quality of your experience on our website.</p>
+      <section className="for-authors">
+        <h2>2. Use of Information:</h2>
+        <p>We use the collected information to:</p>
+        <ul>
+          <li>Provide you with personalized book recommendations based on your interests and reading habits.</li>
+          <li>Send marketing communications, provided you have given your explicit consent.</li>
+          <li>Enhance the functionality and security of our website by analyzing user interactions with our platform.</li>
+        </ul>
+      </section>
       
-      <h2 className='section-title'>3. Sharing Information with Third Parties</h2>
-      <p className='section-content'>We may share your personal information with third-party book-selling platforms and data analysis services to further enhance our services. Any sharing of data will be conducted in compliance with applicable laws and with respect for your privacy.</p>
+      <section className="unique-features">
+        <h2>3. Legal Basis for Processing:</h2>
+        <p>The processing of your data is based on:</p>
+        <ul>
+          <li>Your explicit consent, given by using our website and accepting our Cookie Policy and this Privacy Notice.</li>
+          <li>The need to execute a contract with you, should you make purchases or subscribe to specific services.</li>
+        </ul>
+      </section>
       
-      <h2 className='section-title'>4. International Data Transfers</h2>
-      <p className='section-content'>Your information may be transferred to, and processed in, countries outside of the European Economic Area (EEA) and the United States, under privacy protections that allow such transfers according to United States and European Union policies.</p>
-      
-      <h2 className='section-title'>5. Your Privacy Rights</h2>
-      <p className='section-content'>You have the right to access, rectify, or erase your personal data, as well as the right to restrict processing, the right to data portability, and the right to object. These rights can be exercised by sending an email to support@rmb.com, in accordance with the laws applicable to your jurisdiction.</p>
-      
-      <h2 className='section-title'>6. Data Security</h2>
-      <p className='section-content'>We adopt widely used web security measures to protect your personal information from unauthorized access, alteration, or destruction.</p>
-      
-      <h2 className='section-title'>7. Data Retention</h2>
-      <p className='section-content'>We retain your personal information for the maximum period allowed by law, ensuring that we comply with our legal obligations and resolve disputes as needed.</p>
-      
-      <h2 className='section-title'>8. Links to Third-Party Websites</h2>
-      <p className='section-content'>Our website may contain links to third-party websites. Please be aware that we are not responsible for the privacy practices of such other sites. We encourage you to be aware when you leave our site and to read the privacy statements of each website that collects personal information.</p>
-      
-      <h2 className='section-title'>9. Changes to Our Privacy Policy</h2>
-      <p className='section-content'>We may update our Privacy Policy from time to time. All updates will be notified to you via email.</p>
-      
-      <h2 className='section-title'>10. Contact Us</h2>
-      <p className='section-content'>If you have any questions or concerns regarding our Privacy Policy or the processing of your personal data, please contact us at support@rmb.com.</p>
+      <div className="join-us">
+        <h2>4. Data Protection Agreement:</h2>
+        <p>We establish an agreement with you detailing our responsibilities and your rights concerning the collection, use, and protection of your personal data. This agreement strictly complies with the data protection laws of the United States and the European Union, ensuring the security and privacy of your information.</p>
+      </div>
+
+      <section className="for-readers">
+        <h2>5. Sharing Information:</h2>
+        <p>Your personal information will not be shared with third parties, except in cases where it is necessary to comply with legal obligations or for the provision of contracted services, always under strict security measures.</p>
+      </section>
+
+      <section className="for-authors">
+        <h2>6. International Transfers:</h2>
+        <p>We may transfer data to countries with internationally recognized data protection standards, ensuring that your rights and the security of your data are respected in accordance with applicable laws.</p>
+      </section>
+
+      <section className="unique-features">
+        <h2>7. Your Rights:</h2>
+        <p>You have the right to access, rectify, or delete your data, limit its processing, object to it, and request the portability of your data. These rights can be exercised by sending an email to our contact address.</p>
+      </section>
+
+      <div className="join-us">
+        <h2>8. Security Measures:</h2>
+        <p>We implement the most advanced technical and organizational security measures to protect your personal data against unauthorized access, alteration, and illegal destruction.</p>
+      </div>
+
+      <section className="for-readers">
+        <h2>9. Data Retention:</h2>
+        <p>We retain your personal data only for as long as necessary to fulfill the purposes for which it was collected, respecting the maximum allowed by law.</p>
+      </section>
+
+      <section className="for-authors">
+        <h2>10. Automated Decision-Making and Profiling:</h2>
+        <p>We use your data for profiling and automated decision-making, aiming to personalize book recommendations. We will inform and seek your explicit consent when such processes significantly affect your rights.</p>
+      </section>
+
+      <div className="join-us">
+        <h2>11. Privacy Notice Updates:</h2>
+        <p>We reserve the right to modify this privacy notice. Any changes will be communicated through our website or via email, ensuring you are always informed about how we protect your personal information.</p>
+      </div>
     </div>
   );
 };
 
-
-export default PrivacyPolicy;
+export default PrivacyNotice;

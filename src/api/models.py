@@ -66,3 +66,16 @@ class Comments(db.Model):
             "num_likes": self.num_likes,
             "num_dislikes": self.num_dislikes
         }
+
+class Favorites(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    
+    # Relación con el usuario
+    user = db.relationship("User", backref=db.backref("favorites", lazy=True))
+    # Relación con el libro
+    book = db.relationship("Books", backref=db.backref("favorites", lazy=True))
+
+    def __repr__(self):
+        return f"<Favorites(user_id='{self.user_id}', book_id='{self.book_id}')>"

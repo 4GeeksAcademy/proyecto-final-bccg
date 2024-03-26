@@ -54,7 +54,7 @@ export const Login = () => {
                 </div>
             )}
 
-            <div className={`mb-3 ${formError && email === "" ? "error" : ""}`}>
+            <div className="mb-3">
                 <label htmlFor="exampleInputEmail1" className="form-label">
                     Email address
                 </label>
@@ -71,7 +71,7 @@ export const Login = () => {
                 )}
             </div>
 
-            <div className={`mb-3 ${formError && password === "" ? "error" : ""}`}>
+            <div className="mb-3">
                 <label htmlFor="exampleInputPassword1" className="form-label">
                     Password
                 </label>
@@ -79,7 +79,7 @@ export const Login = () => {
                     <input
                         placeholder="**********"
                         type={showPass ? "password" : "text"}
-                        className={`form-control ${formError && email === '' ? 'error' : ''}`}
+                        className={`form-control ${formError && password === '' ? 'error' : ''}`}
                         id="exampleInputPassword1"
                         onChange={(e) => setPassword(e.target.value)}
                     />

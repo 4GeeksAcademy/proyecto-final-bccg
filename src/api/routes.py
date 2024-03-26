@@ -7,7 +7,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 import os
-from api.models import db, User,Books,Comments
+from api.models import db, User,Books,Comments,Favorites
 
 
 app = Flask(__name__)
@@ -82,3 +82,49 @@ def user_login():
 def private():
     return jsonify({"message":"acceso permitido"}), 200
 
+@api.route("/add_to_favorites", methods=["POST"])
+@jwt_required()
+def add_to_favorites():
+    try:
+        data = request.get_json()
+        user_id = secret_key()  # Obtener el ID del usuario desde el token
+        
+        if not data or "book_id" not in data:
+            return jsonify({"message": "Se requiere el ID del libro"}), 400
+
+        book_id = data["book_id"]
+        book = Books.query.get(book_id)
+        if not book:
+            return jsonify({"message": "Libro no encontrado"}), 404
+
+        # Verificar si el libro ya está en favoritos
+        if Favorites.query.filter_by(user_id=user_id, book_id=book_id).first():
+            return jsonify({"message": "El libro ya está en tus favoritos"}), 400
+
+        favorite = Favorites(user_id=user_id, book_id=book_id)
+        db.session.add(favorite)
+        db.session.commit()
+
+        return jsonify({"message": "Libro agregado a tus favoritos exitosamente"}), 200
+    except Exception as e:
+        print("Error:", e)
+        return jsonify({"message": "Ocurrió un error interno del servidor"}), 500
+
+
+@api.route("/favorites", methods=["GET"])
+@jwt_required()
+def user_favorites():
+    try:
+        user_id = secret_key()  # Obtener el ID del usuario desde el token
+        
+        user = User.query.get(user_id)
+        if not user:
+            return jsonify({"message": "Usuario no encontrado"}), 404
+
+        favorites = Favorites.query.filter_by(user_id=user_id).all()
+        favorite_books = [favorite.book.serialize() for favorite in favorites]
+
+        return jsonify({"favorites": favorite_books}), 200
+    except Exception as e:
+        print("Error:", e)
+        return jsonify({"message": "Ocurrió un error interno del servidor"}), 500
