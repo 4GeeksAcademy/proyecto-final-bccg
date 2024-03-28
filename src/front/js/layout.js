@@ -23,7 +23,7 @@ import CookiesNotice from "./pages/cookies-notice";
 import Recommenders from "./pages/recommenders.js";
 import Contact from "./pages/contact.js";
 import Advertisements from "./pages/advertisements.js";
-
+import { FavoritesPage } from './pages/favorites.js';
 
 
 const Layout = () => {
@@ -46,6 +46,7 @@ const Layout = () => {
                             <Route element={<Forgot />} path="/forgot" />
                             <Route element={<BookDetails />} path="/books/works/:id" />
                             <Route element={<Reviews />} path="/books/works/:id/reviews" />
+                            <Route element={<FavoritesPage />} path="/favorites" />
                             {/* EMPIEZAN PAGINAS DE FOOTER*/}
                             <Route element={<PrivacyPolicy />} path="/privacy-policy" />
                             <Route element={<PrivacyNotice/>} path="/privacy-notice" />

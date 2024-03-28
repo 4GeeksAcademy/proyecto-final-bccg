@@ -1,91 +1,30 @@
-.recommenders {
-    background: linear-gradient(135deg, #f5faff 0%, #f0f0f0 100%);
-    color: #2c3e50;
-    font-family: 'Georgia', serif;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.advertisements-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #faf8f5;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.recommenders:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+.advertisements-title {
+    color: #5d4524;
+    font-family: 'Libre Baskerville', serif;
+    margin-bottom: 1rem;
 }
 
-.recommenders-title, .section-title {
-    color: #8e44ad;
-    font-family: 'Times New Roman', Times, serif;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-    margin-bottom: 25px;
+.advertisements-intro, .for-readers p, .join-us p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #5d4524;
+    margin-bottom: 2rem;
 }
 
-.recommenders-content, .section-content {
-    text-align: justify;
-    line-height: 1.75;
-    margin-bottom: 25px;
-    position: relative;
-    padding-left: 20px;
-}
-
-.recommenders-content::before, .section-content::before {
-    content: "\2022";
-    color: #8e44ad;
-    font-size: 30px;
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.recommenders-content ul, .section-content ul {
-    list-style: none;
-    padding-left: 30px;
-}
-
-.recommenders-content li, .section-content li {
-    position: relative;
-    margin-bottom: 15px;
-}
-
-.recommenders-content li::before, .section-content li::before {
-    content: "\201C";
-    color: #8e44ad;
-    font-size: 25px;
-    position: absolute;
-    left: -20px;
-}
-
-.button {
-    background-color: #3498db;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.button:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
-}
+/* Repetir el mismo patrón para los demás selectores, asegurando la coherencia estilística */
 
 @media (max-width: 768px) {
-    .recommenders {
-        padding: 15px;
-        border-radius: 8px;
+    .advertisements-container {
+        padding: 1rem;
     }
-
-    .recommenders-title, .section-title {
-        font-size: 1.8rem;
-    }
-
-    .recommenders-content, .section-content {
-        font-size: 14px;
-    }
+    /* Ajustes para pantallas pequeñas */
 }

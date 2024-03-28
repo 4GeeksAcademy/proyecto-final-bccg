@@ -14,6 +14,7 @@ class User(db.Model):
 
     # Define relationship with Books (reviews)
     reviews = db.relationship('Books', backref='reviewer', lazy=True)
+    favorites = db.relationship('Favorites', backref='user', lazy=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -41,6 +42,7 @@ class Books(db.Model):
     
     # Add column for user_id
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    favorites = db.relationship('Favorites', backref='book', lazy=True)
 
     def __repr__(self):
         return f"<Books(title='{self.title}', author='{self.author_name}', publish year='{self.first_publish_year}')>"
@@ -66,3 +68,12 @@ class Comments(db.Model):
             "num_likes": self.num_likes,
             "num_dislikes": self.num_dislikes
         }
+
+class Favorites(db.Model):
+    __tablename__ = "favorites"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    
+    def __repr__(self):
+        return f"<Favorites(user_id='{self.user_id}', book_id='{self.book_id}')>"

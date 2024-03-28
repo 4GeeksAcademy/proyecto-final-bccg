@@ -57,7 +57,7 @@ const NavBar = () => {
                 <Dropdown.Menu>
                   <Dropdown.Item as={NavLink} to="/perfil">Profile</Dropdown.Item>
                   <Dropdown.Item as={NavLink} to="/configuraciones">Settings</Dropdown.Item>
-                  <Dropdown.Item as={NavLink} to="/favoritos">Favorites</Dropdown.Item>
+                  {/* <Dropdown.Item as={NavLink} to="/favorites">Favorites</Dropdown.Item> */}
                   <Dropdown.Item as={NavLink} to="/mensajes">Messages</Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item onClick={handleLogout}>Log Out</Dropdown.Item>
