@@ -88,22 +88,22 @@ export const BookDetails = () => {
                 <div className="container-fluid review d-flex bg-light"> 
                     <div className="row">
                     <div className="col-lg-3 col-sm-12 col-md-12">
-                        <img className="img-fluid" src={`https://covers.openlibrary.org/b/id/${bookDetails.covers}-L.jpg`} alt="Portada del libro" />
+                        <img className="img-fluid" src={`https://covers.openlibrary.org/b/id/${bookDetails.covers[0]}.jpg`} alt="Portada del libro" />
                     </div>
                     <div className="col-lg-4 col-sm-12 col-md-12">
                         <h2>{bookDetails.title}</h2>
-                        <p>Autor: {author.name}</p>
-                        <p>Año de publicación: {bookDetails.first_publish_date}</p>
-                        <p>Descripción: {typeof bookDetails.description === 'string' ? bookDetails.description : bookDetails.description?.value}</p>
-                        <p>ISBN: {bookDetails.isbn}</p>
-                        {/*<Link to={`/books/works/${id}/reviews`}>
+                        <p>Author: {author.name}</p>
+                        <p>Year: {bookDetails.first_publish_date}</p>
+                        <p>Description: {typeof bookDetails.description === 'string' ? bookDetails.description : bookDetails.description?.value}</p>
+                        {/*<p>ISBN: {bookDetails.isbn}</p>
+                        <Link to={`/books/works/${id}/reviews`}>
                             <button className="btn btn-success">LEAVE A REVIEW</button>
                         </Link>*/}
                     </div>
                     <div className="col-lg-5 col-sm-12 col-md-12">
                     <Form onSubmit={handleSubmit} className="comentarios">
                         <div controlId="comment">
-                        <label className="form-check-label py-2">Deja tu comentario</label>
+                        <label className="form-check-label py-2">Leave a comment</label>
                         <textarea
                             as="textarea"
                             rows={3}
@@ -113,7 +113,7 @@ export const BookDetails = () => {
                         />
                         </div>
                         <div className="mb-3" controlId="rating">
-                        <label className="form-check-label py-2">Calificación</label>
+                        <label className="form-check-label py-2">Score</label>
                         <div>
                             {renderStars()}
                         </div>

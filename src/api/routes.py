@@ -7,7 +7,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 import os
-from api.models import db, User,Books,Favorites, Comments
+from api.models import db, User,Books, Review
 
 
 app = Flask(__name__)
@@ -143,3 +143,20 @@ def user_favorites():
     except Exception as e:
         print("Error:", e)
         return jsonify({"message": "Ocurrió un error interno del servidor"}), 500
+
+@api.route('/add_review', methods=['POST'])
+@jwt_required()
+def add_review():
+    try:
+        data = request.get_json()
+        user_id = get_jwt_identity()
+        book_id = data["book_id"]
+        content = data["content"]
+
+        review = Review(content=content, user_id=user_id, book_id=book_id)
+        db.session.add(review)
+        db.session.commit()
+
+        return jsonify({"message": "Review added successfully"}), 200
+    except Exception as e:
+        return jsonify({"message": "An error occurred while adding the review: " + str(e)}), 500

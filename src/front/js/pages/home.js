@@ -46,17 +46,17 @@ export const Home = () => {
 
   // Efecto para cargar libros por categoría al montar el componente.
   useEffect(() => {
-      const fetchData = async () => {
-          const popular = await actions.fetchBooksByCategory('popular');
-          const romance = await actions.fetchBooksByCategory('romance');
-          const suspense = await actions.fetchBooksByCategory('suspense');
-          setPopularBooks(popular);
-          setRomanceBooks(romance);
-          setSuspenseBooks(suspense);
-      };
-      fetchData();
+    const fetchData = async () => {
+      const popular = await actions.fetchBooksByCategory('thriller');
+      const romance = await actions.fetchBooksByCategory('romance');
+      const suspense = await actions.fetchBooksByCategory('suspense');
+      setPopularBooks(popular);
+      setRomanceBooks(romance);
+      setSuspenseBooks(suspense);
+    };
+    fetchData();
   }, [actions]);
-  
+
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
@@ -83,15 +83,15 @@ export const Home = () => {
           <BookCarousel title="Suspense Books" books={chunkBooks(suspenseBooks, 4)} />
         )}
         {isLoggedIn && (
-        <div>
-          <h2>My favorite books</h2>
-          <Row xs={1} md={4} className="g-5">
-            {favorites.map((book) => (
-              <BookCard key={book.key} book={book} />
-            ))}
-          </Row>
-        </div>
-      )}
+          <div>
+            <h2>My favorite books</h2>
+            <Row xs={1} md={4} className="g-5">
+              {favorites.map((book) => (
+                <BookCard key={book.key} book={book} />
+              ))}
+            </Row>
+          </div>
+        )}
       </FavoritesContext.Provider>
     </Container>
   );
