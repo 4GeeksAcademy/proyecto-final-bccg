@@ -1,13 +1,13 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt_identity
+import os
 from flask import Flask, request, jsonify, Blueprint
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt_identity
 from flask_bcrypt import Bcrypt
-import os
-from api.models import db, User,Books,Favorites, Comments
+from api.models import db, User,Books,Favorites,Review
+from api.utils import APIException, generate_sitemap
 
 
 app = Flask(__name__)
@@ -18,8 +18,6 @@ api = Blueprint('api', __name__)
 secret_key = os.urandom(24).hex()
 app.config['JWT_SECRET_KEY'] = secret_key
 
-
-
 bcrypt = Bcrypt(app)
 
 CORS(api)
@@ -28,6 +26,7 @@ CORS(api)
 @api.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
+    
     email = data["email"]
     repetido = User.query.filter_by(email=email).first()
 
@@ -42,40 +41,58 @@ def signup():
     db.session.commit()   
 
     return jsonify({"mensaje":"registro exitoso"})
-
-@api.route("/login", methods=["POST"])
+@api.route("/login", methods=['POST'])
 def user_login():
+ try:
+    data = request.get_json()
+    email = data["email"]
+    password = data["password"]
+    
+
+    if not data or "email" not in data or "password" not in data:
+        return jsonify({"message": "Se requieren tanto el correo electrónico como la contraseña"}), 400
+
+    
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    verify_password = bcrypt.check_password_hash(User.password, password)
+    if not verify_password:
+        return jsonify({"message": "Credenciales incorrectas"}), 401
+
+    payload = {
+        "email": User.email, 
+        "first_name": User.first_name, 
+        "last_name": User.last_name,
+        "phone": User.phone, 
+        "location": User.location
+    }
+    token = create_access_token(identity=user.id, additional_claims=payload)
+    return jsonify({"token": token}), 200
+ except Exception as e:
+    print("Error:", e)
+    return jsonify({"message": "Ocurrió un error interno del servidor"}), 500
+
+
+        
+@api.route('/add_review', methods=['POST'])
+@jwt_required()
+def add_review():
     try:
         data = request.get_json()
-        
-        if not data or "email" not in data or "password" not in data:
-            return jsonify({"message": "Se requieren tanto el correo electrónico como la contraseña"}), 400
+        user_id = get_jwt_identity()
+        book_id = data["book_id"]
+        content = data["content"]
 
-        email = data["email"]
-        password = data["password"]
+        review = Review(content=content, user_id=user_id, book_id=book_id)
+        db.session.add(review)
+        db.session.commit()
 
-        user = User.query.filter_by(email=email).first()
-        if not user:
-            return jsonify({"error": "Usuario no encontrado"}), 404
-        
-        if not bcrypt.check_password_hash(user.password, password):
-        
-            return jsonify({"message": "Credenciales incorrectas"}), 401
-
-        payload = {
-            "email": user.email, 
-            "first_name": user.first_name, 
-            "last_name": user.last_name,
-            "phone": user.phone, 
-            "location": user.location, 
-            "nivel": "user"
-        }
-        token = create_access_token(identity=user.id, additional_claims=payload)
-        return jsonify({"token": token}), 200
+        return jsonify({"message": "Review added successfully"}), 200
     except Exception as e:
-        print("Error:", e)
-        return jsonify({"message": "Ocurrió un error interno del servidor"}), 500
-
+        return jsonify({"message": "An error occurred while adding the review: " + str(e)}), 500
 @api.route("/private", methods=["GET"])
 @jwt_required()
 
@@ -110,7 +127,7 @@ def add_to_favorites():
         print("Error:", e)
         return jsonify({"message": "Internal error"}), 500
 
-@app.route("/remove_from_favorites<int:book_id>", methods=["DELETE"])
+@api.route("/remove_from_favorites/<int:book_id>", methods=["DELETE"])
 def remove_from_favorites(book_id):
     data = request.get_json()
     user_id = data['user_id']   # Implementa esta función para obtener el ID del usuario actual.
@@ -143,3 +160,4 @@ def user_favorites():
     except Exception as e:
         print("Error:", e)
         return jsonify({"message": "Ocurrió un error interno del servidor"}), 500
+    
